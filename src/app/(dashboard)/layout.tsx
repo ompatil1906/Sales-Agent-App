@@ -4,6 +4,8 @@ import { Sidebar } from '@/components/Sidebar';
 import { CopilotPanel } from '@/components/CopilotPanel';
 import { AppProvider } from '@/lib/AppContext';
 
+import { Toast } from '@/components/Toast';
+
 export default function DashboardLayout({
     children,
 }: {
@@ -17,6 +19,7 @@ export default function DashboardLayout({
                     {children}
                 </main>
                 <CopilotPanel />
+                <Toast />
             </div>
         </AppProvider>
     );

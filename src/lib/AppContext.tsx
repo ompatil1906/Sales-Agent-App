@@ -14,6 +14,8 @@ interface AppState {
     setProposalContent: React.Dispatch<React.SetStateAction<string>>;
     isGenerating: boolean;
     setIsGenerating: React.Dispatch<React.SetStateAction<boolean>>;
+    toast: { message: string; type: 'success' | 'info' } | null;
+    showToast: (message: string, type?: 'success' | 'info') => void;
 }
 
 const AppContext = createContext<AppState | undefined>(undefined);
@@ -23,13 +25,20 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     const [currentDeal, setCurrentDeal] = useState<CRMDeal | null>(null);
     const [proposalContent, setProposalContent] = useState('');
     const [isGenerating, setIsGenerating] = useState(false);
+    const [toast, setToast] = useState<{ message: string; type: 'success' | 'info' } | null>(null);
+
+    const showToast = (message: string, type: 'success' | 'info' = 'success') => {
+        setToast({ message, type });
+        setTimeout(() => setToast(null), 3000);
+    };
 
     return (
         <AppContext.Provider value={{
             viewMode, setViewMode,
             currentDeal, setCurrentDeal,
             proposalContent, setProposalContent,
-            isGenerating, setIsGenerating
+            isGenerating, setIsGenerating,
+            toast, showToast
         }}>
             {children}
         </AppContext.Provider>
